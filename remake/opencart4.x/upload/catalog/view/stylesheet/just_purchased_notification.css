@@ -1,0 +1,87 @@
+.jpn-container {
+  position: fixed;
+  z-index: 9999;
+  width: min(340px, calc(100vw - 24px));
+  pointer-events: none;
+}
+
+.jpn-container.left_bottom {
+  left: 20px;
+  bottom: 20px;
+}
+
+.jpn-container.right_bottom {
+  right: 20px;
+  bottom: 20px;
+}
+
+.jpn-card {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  margin-top: 10px;
+  line-height: 1.35;
+}
+
+.jpn-card.jpn-motion-slide {
+  animation: jpn-slide-in 350ms ease;
+}
+
+.jpn-card.jpn-motion-fade {
+  animation: jpn-fade-in 280ms ease;
+}
+
+.jpn-card img {
+  display: block;
+  border-radius: 8px;
+}
+
+.jpn-copy {
+  font-size: 13px;
+}
+
+.jpn-copy a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.jpn-time {
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.jpn-clickable {
+  cursor: pointer;
+}
+
+@keyframes jpn-slide-in {
+  from {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes jpn-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .jpn-container {
+    width: min(340px, calc(100vw - 16px));
+  }
+}

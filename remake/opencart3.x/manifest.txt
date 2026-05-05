@@ -1,0 +1,7 @@
+OpenCart 3.x package root should contain:
+- upload/
+
+Zip example:
+just_purchased_notification_oc3.zip
+  upload/admin/...
+  upload/catalog/...

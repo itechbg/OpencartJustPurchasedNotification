@@ -1,0 +1,86 @@
+.ui-notify { 
+	position: fixed;	
+	bottom: 20px; 
+	left: 20px;
+	width: 300px;
+	z-index: 9999;
+}
+.ui-notify-message {
+	padding: 5px;  
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	overflow: auto;
+}
+
+.ui-notify-message:last-child { 
+	margin-bottom:0; 
+}
+
+.ui-notify-message-style { 
+	background: #EEEEEE;
+	border: 1px solid #CCCCCC; 
+}
+
+.ui-notify-message-style h1 { 
+	color:#fff; 
+	font-weight:bold; 
+}
+
+.ui-notify-message-style p { 
+	color:#fff; 
+}
+
+.ui-notify-close { 
+	color:#fff; 
+	text-decoration:underline;	
+}
+
+.ui-notify-click { 
+	cursor:pointer;
+}
+
+.ui-notify-cross { 
+	margin-top:-4px; 
+	float:right; 
+	cursor:pointer; 
+	text-decoration:none; 
+	font-size:12px; 
+	font-weight:bold; 
+	text-shadow:0 1px 1px #fff; 
+	padding:2px; 
+}
+
+.ui-notify-cross:hover { 
+	color:#ffffab; 
+}
+
+.ui-notify-cross:active { 
+	position:relative; 
+	top:1px; 
+}
+
+.jpn-image-area {
+	float: left;
+	margin-right: 10px;
+}
+
+.jpn-message {
+	font-family: 'PT Sans', Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	margin-bottom: 5px;
+}
+
+.jpn-message a {
+	font-size: 13px;
+	color: #40a1c9;
+	text-decoration: none;
+}
+
+.jpn-time-ago {
+	font-family: 'PT Sans', Arial,Helvetica,sans-serif;
+	font-size: 11px;
+	color: #333;
+}

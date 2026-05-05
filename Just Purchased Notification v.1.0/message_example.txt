@@ -1,0 +1,15 @@
+Notification Message: 
+---------------------
+Someone from {city} purchased {quantity} x {product_with_link}
+
+Minutes ago:
+------------
+about {time_counter} minutes ago
+
+Hours ago:
+----------
+about {time_counter} hours ago
+
+Days ago:
+---------
+about {time_counter} days ago

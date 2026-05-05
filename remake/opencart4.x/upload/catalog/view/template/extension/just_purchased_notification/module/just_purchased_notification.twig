@@ -1,0 +1,5 @@
+{% if notifications %}
+<div id="jpn-root"
+     data-config='{{ config|json_encode|e('html_attr') }}'
+     data-notifications='{{ notifications|json_encode|e('html_attr') }}'></div>
+{% endif %}

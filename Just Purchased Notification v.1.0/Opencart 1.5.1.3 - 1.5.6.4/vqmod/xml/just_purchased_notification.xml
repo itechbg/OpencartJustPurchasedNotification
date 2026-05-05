@@ -1,0 +1,21 @@
+<modification>
+	<id>OC-Extensions.com - Just Purchased Notification</id>
+	<version>1.0</version>
+	<vqmver>1.0.8</vqmver>
+	<author>oc-extensions.com</author>
+
+	<file name="admin/model/catalog/product.php">
+		<operation error="log">
+			<search position="after"><![CDATA[$this->cache->delete('product');]]></search>
+			<add><![CDATA[$this->cache->delete('just_purchased_notification');]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/model/checkout/order.php">
+		<operation error="log">
+			<search position="after"><![CDATA[$this->cache->delete('product');]]></search>
+			<add><![CDATA[$this->cache->delete('just_purchased_notification');]]></add>
+		</operation>
+	</file>
+	
+</modification>

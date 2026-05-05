@@ -1,0 +1,173 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}</div>
+    {% endif %}
+
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-bell"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" id="form-module">
+          <ul class="nav nav-tabs" id="jpn-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-general">{{ tab_general }}</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-message">{{ tab_message }}</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-design">{{ tab_design }}</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-behavior">{{ tab_behavior }}</a></li>
+          </ul>
+
+          <div class="tab-content pt-3">
+            <div class="tab-pane fade show active" id="tab-general">
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_status }}</label>
+                <div class="col-sm-9">
+                  <select name="module_just_purchased_notification_status" class="form-select">
+                    <option value="1" {{ module_just_purchased_notification_status ? 'selected' : '' }}>{{ text_enabled }}</option>
+                    <option value="0" {{ not module_just_purchased_notification_status ? 'selected' : '' }}>{{ text_disabled }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_auto_inject }}</label>
+                <div class="col-sm-9">
+                  <select name="module_just_purchased_notification_auto_inject" class="form-select">
+                    <option value="1" {{ module_just_purchased_notification_auto_inject ? 'selected' : '' }}>{{ text_enabled }}</option>
+                    <option value="0" {{ not module_just_purchased_notification_auto_inject ? 'selected' : '' }}>{{ text_disabled }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_limit }}</label>
+                <div class="col-sm-9">
+                  <input type="number" min="1" name="module_just_purchased_notification_limit" value="{{ module_just_purchased_notification_limit }}" class="form-control" />
+                  {% if error_limit %}<div class="text-danger">{{ error_limit }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_order_status }}</label>
+                <div class="col-sm-9">
+                  <div class="border rounded p-2" style="height: 160px; overflow:auto;">
+                    {% for order_status in order_statuses %}
+                      <div class="form-check">
+                        <input class="form-check-input" id="order-status-{{ order_status.order_status_id }}" type="checkbox" name="module_just_purchased_notification_order_status[]" value="{{ order_status.order_status_id }}" {% if order_status.order_status_id in module_just_purchased_notification_order_status %}checked{% endif %}>
+                        <label class="form-check-label" for="order-status-{{ order_status.order_status_id }}">{{ order_status.name }}</label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  {% if error_order_status %}<div class="text-danger">{{ error_order_status }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_cache }}</label>
+                <div class="col-sm-9">
+                  <select name="module_just_purchased_notification_cache" class="form-select">
+                    <option value="1" {{ module_just_purchased_notification_cache ? 'selected' : '' }}>{{ text_enabled }}</option>
+                    <option value="0" {{ not module_just_purchased_notification_cache ? 'selected' : '' }}>{{ text_disabled }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_cache_ttl }}</label>
+                <div class="col-sm-9">
+                  <input type="number" min="0" name="module_just_purchased_notification_cache_ttl" value="{{ module_just_purchased_notification_cache_ttl }}" class="form-control" />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="offset-sm-3 col-sm-9">
+                  <button id="btn-clear-cache" type="button" class="btn btn-warning">{{ button_clear_cache }}</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-message">
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_message_template }}</label>
+                <div class="col-sm-9">
+                  <textarea name="module_just_purchased_notification_message_template" class="form-control" rows="3">{{ module_just_purchased_notification_message_template }}</textarea>
+                  <div class="form-text">{{ text_keywords }}</div>
+                  {% if error_message_template %}<div class="text-danger">{{ error_message_template }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">{{ entry_show_time_ago }}</label>
+                <div class="col-sm-9">
+                  <select name="module_just_purchased_notification_show_time_ago" class="form-select">
+                    <option value="1" {{ module_just_purchased_notification_show_time_ago ? 'selected' : '' }}>{{ text_enabled }}</option>
+                    <option value="0" {{ not module_just_purchased_notification_show_time_ago ? 'selected' : '' }}>{{ text_disabled }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_time_minute_template }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_time_minute_template" value="{{ module_just_purchased_notification_time_minute_template }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_time_hour_template }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_time_hour_template" value="{{ module_just_purchased_notification_time_hour_template }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_time_day_template }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_time_day_template" value="{{ module_just_purchased_notification_time_day_template }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_hide_time_ago_after }}</label><div class="col-sm-9"><input type="number" class="form-control" name="module_just_purchased_notification_hide_time_ago_after" value="{{ module_just_purchased_notification_hide_time_ago_after }}" /></div></div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-design">
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_image_width }}</label><div class="col-sm-3"><input type="number" min="1" name="module_just_purchased_notification_image_width" value="{{ module_just_purchased_notification_image_width }}" class="form-control" /></div><label class="col-sm-3 col-form-label">{{ entry_image_height }}</label><div class="col-sm-3"><input type="number" min="1" name="module_just_purchased_notification_image_height" value="{{ module_just_purchased_notification_image_height }}" class="form-control" /></div></div>
+              {% if error_image %}<div class="text-danger">{{ error_image }}</div>{% endif %}
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_background_color }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_background_color" value="{{ module_just_purchased_notification_background_color }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_border_color }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_border_color" value="{{ module_just_purchased_notification_border_color }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_text_color }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_text_color" value="{{ module_just_purchased_notification_text_color }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_link_color }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_link_color" value="{{ module_just_purchased_notification_link_color }}" /></div></div>
+              {% if error_color %}<div class="text-danger">{{ error_color }}</div>{% endif %}
+            </div>
+
+            <div class="tab-pane fade" id="tab-behavior">
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_delay }}</label><div class="col-sm-9"><input type="number" min="100" class="form-control" name="module_just_purchased_notification_delay" value="{{ module_just_purchased_notification_delay }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_display_time }}</label><div class="col-sm-9"><input type="number" min="100" class="form-control" name="module_just_purchased_notification_display_time" value="{{ module_just_purchased_notification_display_time }}" /></div></div>
+              {% if error_timing %}<div class="text-danger">{{ error_timing }}</div>{% endif %}
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_start_delay }}</label><div class="col-sm-9"><input type="number" min="0" class="form-control" name="module_just_purchased_notification_start_delay" value="{{ module_just_purchased_notification_start_delay }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_click_anywhere }}</label><div class="col-sm-9"><select class="form-select" name="module_just_purchased_notification_click_anywhere"><option value="1" {{ module_just_purchased_notification_click_anywhere ? 'selected' : '' }}>{{ text_enabled }}</option><option value="0" {{ not module_just_purchased_notification_click_anywhere ? 'selected' : '' }}>{{ text_disabled }}</option></select></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_position }}</label><div class="col-sm-9"><select class="form-select" name="module_just_purchased_notification_position"><option value="left_bottom" {{ module_just_purchased_notification_position == 'left_bottom' ? 'selected' : '' }}>{{ text_left_bottom }}</option><option value="right_bottom" {{ module_just_purchased_notification_position == 'right_bottom' ? 'selected' : '' }}>{{ text_right_bottom }}</option></select></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_motion }}</label><div class="col-sm-9"><select class="form-select" name="module_just_purchased_notification_motion"><option value="slide" {{ module_just_purchased_notification_motion == 'slide' ? 'selected' : '' }}>{{ text_slide }}</option><option value="fade" {{ module_just_purchased_notification_motion == 'fade' ? 'selected' : '' }}>{{ text_fade }}</option><option value="none" {{ module_just_purchased_notification_motion == 'none' ? 'selected' : '' }}>{{ text_none }}</option></select></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_bottom_offset }}</label><div class="col-sm-9"><input type="number" min="0" class="form-control" name="module_just_purchased_notification_bottom_offset" value="{{ module_just_purchased_notification_bottom_offset }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_side_offset }}</label><div class="col-sm-9"><input type="number" min="0" class="form-control" name="module_just_purchased_notification_side_offset" value="{{ module_just_purchased_notification_side_offset }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_shuffle }}</label><div class="col-sm-9"><select class="form-select" name="module_just_purchased_notification_shuffle"><option value="1" {{ module_just_purchased_notification_shuffle ? 'selected' : '' }}>{{ text_enabled }}</option><option value="0" {{ not module_just_purchased_notification_shuffle ? 'selected' : '' }}>{{ text_disabled }}</option></select></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_exclude_product_ids }}</label><div class="col-sm-9"><input type="text" class="form-control" name="module_just_purchased_notification_exclude_product_ids" value="{{ module_just_purchased_notification_exclude_product_ids }}" /></div></div>
+              <div class="row mb-3"><label class="col-sm-3 col-form-label">{{ entry_debug }}</label><div class="col-sm-9"><select class="form-select" name="module_just_purchased_notification_debug"><option value="1" {{ module_just_purchased_notification_debug ? 'selected' : '' }}>{{ text_enabled }}</option><option value="0" {{ not module_just_purchased_notification_debug ? 'selected' : '' }}>{{ text_disabled }}</option></select></div></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('btn-clear-cache')?.addEventListener('click', function() {
+  fetch('{{ clear_cache }}', { method: 'POST' })
+    .then(function(response) { return response.json(); })
+    .then(function(json) {
+      if (json.error) {
+        window.alert(json.error);
+      } else if (json.success) {
+        window.alert(json.success);
+      }
+    });
+});
+</script>
+{{ footer }}
